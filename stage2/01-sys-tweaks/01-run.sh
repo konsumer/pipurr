@@ -1,5 +1,11 @@
 #!/bin/bash -e
 
+on_chroot << EOF
+wget https://github.com/konsumer/zerostomp-ideas/releases/download/pd-buster/pd-l2ork-2.9.0-20190624-rev.e2b3cc4a-armv7l.deb
+apt-get install -y ./pd-l2ork-2.9.0-20190624-rev.e2b3cc4a-armv7l.deb
+rm pd-l2ork-2.9.0-20190624-rev.e2b3cc4a-armv7l.deb
+EOF
+
 install -m 755 files/resize2fs_once	"${ROOTFS_DIR}/etc/init.d/"
 
 install -d				"${ROOTFS_DIR}/etc/systemd/system/rc-local.service.d"
