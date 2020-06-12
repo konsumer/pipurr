@@ -8,6 +8,8 @@ This uses [pi-gen](https://github.com/RPi-Distro/pi-gen). I configured it with i
 
 I setup a `config` file, so you can set it up with `./build-docker.sh`
 
+Still need to incorporate ideas from [here](https://github.com/konsumer/zerostomp-ideas)
+
 ## hardware
 
 The pedal is meant to operate plugged-in (no battery power) and uses a pi-zero to do all the work. It uses 4 rotary-encoders for input, a single 3PDT footswitch for true-bypass, and 2 buttons to select the current patch. It has a Nokia 5110 to display status and show the values of different parameters. The USB power plug is hooked up to the piZero data-port, so it can get power & also run in USB host mode if it's connected to a computer.
