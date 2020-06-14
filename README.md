@@ -51,6 +51,8 @@ Hook it up in a [true bypass](https://www.coda-effects.com/2015/03/3pdt-and-true
 - 8 to GPIO0 of pi stomp (pin 11)
 - 9 to 5V of pi (2 or 4)
 
+Now it will work like this:
+
 - *OFF* - (up) output will be connected to input, and the pi will get ground on GPIO0
 - *ON* - (down) input/output will be connected to audio-device, and the pi will get 5V on GPIO0
 
