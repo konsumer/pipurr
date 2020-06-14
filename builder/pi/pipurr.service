@@ -1,0 +1,13 @@
+# /usr/lib/systemd/system/pipurr.service
+ 
+[Unit]
+Description=PiPurr Gadget
+After=systemd-modules-load.service
+ 
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/pipurr
+ 
+[Install]
+WantedBy=sysinit.target

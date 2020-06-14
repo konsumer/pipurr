@@ -1,0 +1,30 @@
+# Disable the rainbow splash screen
+disable_splash=1
+
+# turn on hardware i2c
+dtparam=i2c_arm=on,i2c_arm_baudrate=400000
+
+# Set the bootloader delay to 0 seconds. The default is 1s if not specified.
+boot_delay=0
+
+# Overclock the SD Card from 50 to 100MHz
+# This can only be done with at least a UHS Class 1 card
+dtoverlay=sdtweak,overclock_50=100
+
+# Overclock the raspberry pi. This voids its warranty. Make sure you have a good power supply.
+force_turbo=1
+
+# enable Audio Injector Zero sound card
+# dtoverlay=audioinjector-wm8731-audio
+
+# turn on events for rotary-encoders
+dtoverlay=rotary-encoder,pin_a=3,pin_b=4,relative_axis=1
+dtoverlay=rotary-encoder,pin_a=6,pin_b=7,relative_axis=1
+dtoverlay=rotary-encoder,pin_a=11,pin_b=12,relative_axis=1
+dtoverlay=rotary-encoder,pin_a=14,pin_b=21,relative_axis=1
+
+# Disable bluetooth
+dtoverlay=pi3-disable-bt
+
+# Disable Wifi
+dtoverlay=pi3-disable-wifi
