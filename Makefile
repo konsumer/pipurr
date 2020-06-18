@@ -36,7 +36,8 @@ pipurr: ${OUTPUT_IMAGE} ## Create image-file for distribution
 # create the actual disk image
 ${OUTPUT_IMAGE}: ${PURRDEB} ${IMAGE} 
 	@mkdir -p work
-	@cp "${IMAGE}" "${OUTPUT_IMAGE}"
+	@cp "${IMAGE}" "${PWD}/${OUTPUT_IMAGE}"
+	sudo ./builder/resize_image.sh "${PWD}/${OUTPUT_IMAGE}" 3G
 	sudo ./builder/chroot.sh "${PWD}/${OUTPUT_IMAGE}" "${PWD}/work" bash /usr/rpi/builder/setup_image.sh
 
 

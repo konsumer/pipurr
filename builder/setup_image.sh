@@ -2,11 +2,14 @@
 
 # This should run in the context of the pi to set it up as a nice platform for purr-data
 
+apt update
+apt upgrade -y
+
 # install a bunch of tools & plugins
 apt install -y ladspa-sdk dssi-dev tap-plugins invada-studio-plugins-ladspa blepvco swh-plugins mcp-plugins cmt blop omins rev-plugins dssi-utils vco-plugins wah-plugins fil-plugins mda-lv2 fluid-soundfont-gm
 
 # install my built version of purr-data
-apt install -y /usr/rpi/pd-l2ork-2.9.0-20190624-rev.e2b3cc4a-armv7l.deb
+apt install -y /usr/rpi/pd-l2ork-*.deb
 
 # copy data-files to mounted boot
 cp -R /usr/rpi/builder/pi/boot/* /boot
