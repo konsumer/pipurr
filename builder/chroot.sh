@@ -5,6 +5,8 @@ if (( $# < 3 )); then
   exit 1
 fi
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 # grab first 2 arguments, and leave rest of arguments
 IMAGE="${1}"
 shift
@@ -26,38 +28,18 @@ function cleanup {
 }
 trap cleanup EXIT
 
-echo "Attempting to mount ${IMAGE} to ${ROOT}"
-
-# Attach loopback device
-LOOP_BASE=$(losetup -f --show "${IMAGE}")
-
-echo "Attached base loopback at: ${LOOP_BASE}"
-
-# TODO: could grab this from fdisk instead of hard coding
-BLOCK_SIZE=512
-
-# Fetch and parse partition info
-P1_INFO=($`fdisk -l "${LOOP_BASE}" | grep p1`)
-P2_INFO=($`fdisk -l "${LOOP_BASE}" | grep p2`)
-
-# Locate partition start sectors
-P1_START=${P1_INFO[1]}
-P2_START=${P2_INFO[1]}
-
-echo "Located partitions: p1 (/boot) at ${P1_START} and p2 (/) at ${P2_START}"
-
-# Cleanup loopbacks
-losetup -d "${LOOP_BASE}"
-echo "Closed loopback ${LOOP_BASE}"
-
-# Mount image with the offsets determined above
-echo "Mounting to ${ROOT} and ${ROOT}/boot"
-mount "${IMAGE}" -o loop,offset=$(($P2_START*$BLOCK_SIZE)),rw "${ROOT}"
-mount "${IMAGE}" -o loop,offset=$(($P1_START*$BLOCK_SIZE)),sizelimit=$((85405*$BLOCK_SIZE)),rw "${ROOT}/boot"
-
-echo "Binding /usr/rpi into ${ROOT} for chroot"
 mkdir -p "${ROOT}"
-mount --bind /usr/rpi "${ROOT}"
 
-echo "running chroot ${ROOT} ${CHROOT_ARGS}"
+INFO=($(fdisk --bytes -lo Start,Size "${IMAGE}" | tail -n 2))
+
+BOOT_START=$((${INFO[0]} * 512))
+BOOT_SIZE=${INFO[1]}
+ROOT_START=$((${INFO[2]} * 512))
+ROOT_SIZE=${INFO[3]}
+
+mount -o loop,offset=${ROOT_START},sizelimit=${ROOT_SIZE} -t ext4 "${IMAGE}" "${ROOT}"
+mount -o loop,offset=${BOOT_START},sizelimit=${BOOT_SIZE} -t vfat "${IMAGE}" "${ROOT}/boot"
+mkdir -p "${ROOT}/usr/rpi"
+mount --bind "${DIR}/../" "${ROOT}/usr/rpi"
+
 chroot "${ROOT}" $CHROOT_ARGS
