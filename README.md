@@ -120,4 +120,10 @@ You can make patches on you computer in [purrdata](https://agraef.github.io/purr
 
 ## development
 
-You shouldn't need this, unless you are working on a customized disk-image. I designed the tools to work on a linux system, all from `make`. You might be able to get it working on OSX, or WSL in Windows, but I haven't tested. You'll need make, docker, qemu-user, unzip and wget installed.
+You shouldn't need this, unless you are working on a customized disk-image. I designed the tools to work on a linux system, all from `make`. You might be able to get it working on OSX, or WSL in Windows, but I haven't tested. You'll need make, docker, qemu-user, binfmt-misc, unzip, and wget installed.
+
+Here is what I did on a Pop!OS 20.04 system to get the initial tools installed:
+
+```
+sudo apt install docker.io qemu-user-static
+```

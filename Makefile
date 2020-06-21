@@ -25,10 +25,11 @@ purrdata: ${PURRDEB} ## Build a purr-data deb for pi
 download: ${IMAGE} ## Download & verify raspbiOS-lite disk image
 
 emulate: ${OUTPUT_IMAGE} ## Fully emulate a pi running the current image
-	@docker run -it -v ${PWD}/${OUTPUT_IMAGE}:/sdcard/filesystem.img lukechilds/dockerpi
+	@docker run -it -v ${PWD}/${IMAGE}:/sdcard/filesystem.img lukechilds/dockerpi
 
-bash: ${OUTPUT_IMAGE} ## Run bash inside chroot
-	sudo ./builder/chroot.sh "${PWD}/${OUTPUT_IMAGE}" "${PWD}/work" bash
+bash: ${IMAGE} ## Run bash inside chroot
+	@mkdir -p work
+	sudo ./builder/chroot.sh "${PWD}/${IMAGE}" "${PWD}/work" bash
 
 pipurr: ${OUTPUT_IMAGE} ## Create image-file for distribution
 
