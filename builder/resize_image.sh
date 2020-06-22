@@ -17,6 +17,6 @@ rm /tmp/filler
 
 LOOP=$(losetup --partscan --find --show "${IMAGE}")
 parted ${LOOP} resizepart 2 ${NEW_SIZE}
-resize2fs -M ${LOOP}p2
 e2fsck -f -y ${LOOP}p2
+resize2fs -M ${LOOP}p2
 losetup --detach $LOOP
