@@ -127,3 +127,5 @@ Here is what I did on a Pop!OS 20.04 system to get the initial tools installed:
 ```
 sudo apt install docker.io qemu-user-static
 ```
+
+Idea: consider switching to [firstboot](https://github.com/meeDamian/raspios) for easier setup & normalized build environment. It has self-contained qemu, is easier to test, and just runs a script once to set it all up. This could be used in qemu (running in docker) to setup the image for distrobution.
